@@ -112,10 +112,8 @@ class Player:
         Remove from the hand of the player, all cards having a corresponding symbol.
         Args:
             symbol: The symbol to look for.
-
         Returns: The cards removed from the hand of the player. It will return an empty array if
         nothing is found.
-
         """
         cards_played = [card for card in self._hand if card.symbol ==
                         symbol]
@@ -141,9 +139,7 @@ class AIPlayer(Player):
         Args:
             choice: The minimum card value to play.
             nb_cards: The number of cards to play.
-
         Returns: An array of cards to play.
-
         """
         best_choice = None
         for index, card in enumerate(self.hand):
@@ -156,12 +152,13 @@ class AIPlayer(Player):
 
 
 class PresidentGame:
-    def __init__(self, nb_players: int = 4):
+    def __init__(self, nb_players: int = 3):
         self.__generate_players(nb_players)
         self.__generate_cards()
+        self.distribute_cards()
         self.round = 0
 
-    def __generate_players(self, nb_players: int):
+    def __generate_players(self, nb_players: int ):
         self.__players = [Player()]
         for _ in range(nb_players-1):
             self.__players.append(AIPlayer())

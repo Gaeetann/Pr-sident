@@ -1,8 +1,12 @@
 from models import PresidentGame
 
+print("Nombre de joueur :")
+nb_players = input()
+print(f"Le nombre de joueur est :{nb_players}")
 
 def print_ln():
     print('\n')
+
 
 
 def game_loop(g: PresidentGame):
