@@ -53,7 +53,7 @@ A partir du fichier `main.py`, implémentez une petite interface pour représent
 > Ceci vous oblige à devoir d'abord réfléchir sur la conception des objets. 
  Et leurs interactions.
  
-- [ ] Présentation des joueurs en début de partie, et affichage du nombre de cartes que chaque joueur a en main.
+- [X] Présentation des joueurs en début de partie, et affichage du nombre de cartes que chaque joueur a en main.
 - [ ] Le déroulé d'une manche. 
     - Chaque utilisateur doit fournir s'il peut (ou veut) la quantité de cartes demandées.
     - Le vainqueur d'une manche ouvre la manche suivante

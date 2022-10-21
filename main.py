@@ -18,7 +18,9 @@ def game_loop(g: PresidentGame):
     """
     wanna_continue = True
     while wanna_continue:
-
+        print("vous jouer contre :")
+        for i in g.ai_players:
+             print(f"{i.name} qui a : {len(i.hand)} cartes")
         print('Your current deck is : ')
         print(g.main_player.hand, )
         print_ln()
@@ -41,6 +43,8 @@ def game_loop(g: PresidentGame):
 
         wanna_continue = input('Do you want to continue playing (y/N)? ')
         wanna_continue = (wanna_continue == 'Y' or wanna_continue == 'y')
+        print()
+        print("*******************************************************************")
 
 
 if __name__ == '__main__':
