@@ -32,6 +32,14 @@ def game_loop(g: PresidentGame):
         plays = g.main_player.play(choice)
         print(f"You play {plays}")
 
+        if len(plays) > 1:
+            listenb_cards = []
+            nb_cards = int(input('Choisir le nombre : '))
+            for i in range(nb_cards):
+                listenb_cards.append(plays.pop())
+            print(listenb_cards)
+            print("le nombre de carte jouer est : ", nb_cards)
+
         nb_cards = len(plays)
         for ai in g.ai_players:
             plays = ai.play(choice, nb_cards)
@@ -56,4 +64,5 @@ if __name__ == '__main__':
     g = PresidentGame()
     g.distribute_cards()
     game_loop(g)
-    print('Thank you for playing. I hope you enjoyed !')
+    print('Thank for you game, do you want to restart (Y/N ?')
+
