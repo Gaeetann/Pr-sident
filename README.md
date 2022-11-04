@@ -47,7 +47,7 @@ A partir du fichier `main.py`, implémentez une petite interface pour représent
  - /1	Validation des tests unitaires existants
  - /2 Présence de tests unitaires sur les nouvelles fonctionnalités
  - /2	Interface graphique (TK)
- - /2	Présentation graphique aboutie
+ - /2	Gestion du code en Programmation Orientée Objet
  - /2 Manches et déroulement d'un tour fonctionnel
  - /3	Fonctionnalités avancées de jeu du président
 
