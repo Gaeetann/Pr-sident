@@ -125,7 +125,7 @@ class Player:
             try:
                 choice = int(input("nombre de carte jouer ?"))
             except ValueError:
-                print("non non non ")
+                print("tu n'es pas le pingouin qui glisse le plus loin ")
             if choice > len(cards_selected):
                 print("Vous n'avez pas assez de carte pour jouer ", choice, "carte")
             else:
