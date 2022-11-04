@@ -107,7 +107,7 @@ class Player:
     def name(self):
         return self._name
 
-    def play(self, symbol) -> list:
+    def play(self, symbol, ) -> list:
         """
         Remove from the hand of the player, all cards having a corresponding symbol.
         Args:
@@ -115,8 +115,22 @@ class Player:
         Returns: The cards removed from the hand of the player. It will return an empty array if
         nothing is found.
         """
-        cards_played = [card for card in self._hand if card.symbol ==
+        cards_selected = [card for card in self._hand if card.symbol ==
                         symbol]
+        cards_played = []
+        print(cards_selected)
+
+        while len(cards_selected) > 1:
+
+            try:
+                choice = int(input("nombre de carte jouer ?"))
+            except ValueError:
+                print("non non non ")
+            if choice > len(cards_selected):
+                print("Vous n'avez pas assez de carte pour jouer ", choice, "carte")
+            else:
+                for i in range(choice):
+                    cards_played.append(cards_selected.pop(i))
         self.remove_from_hand(cards_played)
         return cards_played
 
@@ -134,7 +148,7 @@ class Player:
 class AIPlayer(Player):
     def play(self, choice, nb_cards: int) -> list:
         """
-        Play a card correspondig to what has been played on the table.
+        Play a card correspond to what has been played on the table.
         TODO: Implement an AI
         Args:
             choice: The minimum card value to play.
@@ -152,13 +166,13 @@ class AIPlayer(Player):
 
 
 class PresidentGame:
-    def __init__(self, nb_players ):
+    def __init__(self, nb_players):
         self.__generate_players(nb_players)
         self.__generate_cards()
         self.distribute_cards()
         self.round = 0
 
-    def __generate_players(self, nb_players ):
+    def __generate_players(self, nb_players):
         self.__players = [Player()]
         for _ in range(nb_players-1):
             self.__players.append(AIPlayer())
@@ -187,3 +201,4 @@ class PresidentGame:
     def main_player(self):
         """ Main player is player 0 """
         return self.__players[0]
+

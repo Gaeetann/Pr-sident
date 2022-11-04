@@ -40,6 +40,7 @@ def game_loop(g: PresidentGame):
                 listenb_cards.append(plays.pop())
             print(listenb_cards)
             print("le nombre de carte jouer est : ", nb_cards)
+            plays = listenb_cards[:]
 
         nb_cards = len(plays)
         for ai in g.ai_players:
