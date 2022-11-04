@@ -152,13 +152,13 @@ class AIPlayer(Player):
 
 
 class PresidentGame:
-    def __init__(self, nb_players: int = 3):
+    def __init__(self, nb_players ):
         self.__generate_players(nb_players)
         self.__generate_cards()
         self.distribute_cards()
         self.round = 0
 
-    def __generate_players(self, nb_players: int ):
+    def __generate_players(self, nb_players ):
         self.__players = [Player()]
         for _ in range(nb_players-1):
             self.__players.append(AIPlayer())

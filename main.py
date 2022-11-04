@@ -1,7 +1,8 @@
 from models import PresidentGame
 
-print("Nombre de joueur :")
-nb_players = input()
+
+nb_players = input("nombre de joueur:")
+nb_players = int (nb_players)
 print(f"Le nombre de joueur est :{nb_players}")
 
 def print_ln():
@@ -61,7 +62,7 @@ if __name__ == '__main__':
         """        *********************************************
         *** President : The cards game (TM) v.0.1 ***
         ********************************************* """)
-    g = PresidentGame()
+    g = PresidentGame(nb_players)
     g.distribute_cards()
     game_loop(g)
     print('Thank for you game, do you want to restart (Y/N ?')
