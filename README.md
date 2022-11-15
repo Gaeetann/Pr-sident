@@ -38,6 +38,19 @@ A partir du fichier `main.py`, implémentez une petite interface pour représent
  Une vérification doit être mise en place pour voir si le choix de l
  'utilisateur est correct.
   
+## Barème /20: 
+ - /1   Présence d'un fichier `requirements.txt` 
+ - /1   Pertinence du fichier `Readme.md`
+ - /2   Gestion de GIT
+ - /2   Doctrings
+ - /2	Nommage méthodes/classes/variables
+ - /1	Validation des tests unitaires existants
+ - /2 Présence de tests unitaires sur les nouvelles fonctionnalités
+ - /2	Interface graphique (TK)
+ - /2	Gestion du code en Programmation Orientée Objet
+ - /2 Manches et déroulement d'un tour fonctionnel
+ - /3	Fonctionnalités avancées de jeu du président
+
  ## Encore à implémenter.
  
  > Réaliser l'ensemble de ces fonctionnalités en TDD. 
