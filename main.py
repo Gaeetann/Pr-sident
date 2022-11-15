@@ -1,13 +1,12 @@
 from models import PresidentGame
 
-
-nb_players = input("nombre de joueur:")
-nb_players = int (nb_players)
+nb_players = input("Nombre de joueur :")
+nb_players = int(nb_players)
 print(f"Le nombre de joueur est :{nb_players}")
+
 
 def print_ln():
     print('\n')
-
 
 
 def game_loop(g: PresidentGame):
@@ -17,39 +16,73 @@ def game_loop(g: PresidentGame):
     Args:
         g: The President Game instance.
     """
+
+    global plays
     wanna_continue = True
+    winner = 0
     while wanna_continue:
+        players_in_game = [x for x in g.players]
+        players_active = [x for x in g.players]
         print("vous jouer contre :")
         for i in g.ai_players:
-             print(f"{i.name} qui a : {len(i.hand)} cartes")
+            print(f"{i.name} qui a : {len(i.hand)} cartes")
         print('Your current deck is : ')
-        print(g.main_player.hand, )
+        # print(g.main_player.hand, )
         print_ln()
+        print(g.main_player.hand, )
+
         choice = '0'
+        i = winner
+        plays = None
+        while len(players_in_game) > 1:
+            if len(players_in_game) - 1 < i:
+                i = 0
+            player = players_in_game[i]
 
-        while g.main_player.has_symbol(choice) == 0:
-            choice = input('What value do you wish to play ? ')
+            if player is g.main_player:
+                print(g.main_player.hand, )
+                plays = g.main_player.play(plays)
+                print(plays)
+                print(f"You play {plays}")
 
-        plays = g.main_player.play(choice)
-        print(f"You play {plays}")
+            else:
+                if plays is None:
+                    nb_cards = 1
 
-        if len(plays) > 1:
-            listenb_cards = []
-            nb_cards = int(input('Choisir le nombre : '))
-            for i in range(nb_cards):
-                listenb_cards.append(plays.pop())
-            print(listenb_cards)
-            print("le nombre de carte jouer est : ", nb_cards)
-            plays = listenb_cards[:]
+                else:
+                    nb_cards = len(plays)
+                    choice = plays[0].symbol
+                plays = player.play(choice, nb_cards)
+                print(player.name,plays)
 
-        nb_cards = len(plays)
-        for ai in g.ai_players:
-            plays = ai.play(choice, nb_cards)
-            print(f"{ai.name} plays \t {plays}")
+            if len(plays) == 0:
+                players_in_game.remove(player)
 
-            # Update latest card played
-            if len(plays) > 0:
-                choice = plays[0].symbol
+            elif len(player.hand) == 0:
+                if len(players_active) == len(player):
+                    player.president = True
+                players_in_game.remove(player)
+                players_active.remove(player)
+
+            else:
+                i = i+1
+
+
+
+        # print("vous jouer contre :")
+        # for i in g.ai_players:
+        #     print(f"{i.name} qui a : {len(i.hand)} cartes")
+        # print('Your current deck is : ')
+        # # print(g.main_player.hand, )
+        # print_ln()
+        # print(g.main_player.hand, )
+        # while g.main_player.has_symbol(choice) == 0:
+        #     choice = input('What value do you wish to play ? ')
+        #     if g.main_player.infer(choice, plays[0].symbol):
+        #         plays = g.main_player.play(choice)
+        #
+        # print(plays)
+        # print(f"You play {plays}")
 
         wanna_continue = input('Do you want to continue playing (y/N)? ')
         wanna_continue = (wanna_continue == 'Y' or wanna_continue == 'y')
@@ -66,5 +99,7 @@ if __name__ == '__main__':
     g = PresidentGame(nb_players)
     g.distribute_cards()
     game_loop(g)
-    print('Thank for you game, do you want to restart (Y/N ?')
+    print('Thank you for playing. I hope you enjoyed !')
 
+# quand choix multiple, pas les bonnes cartes qui sont pop
+# quand choix multiple, vÃ©rifier que l'utilisateur ne choissent pas 0

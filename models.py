@@ -21,6 +21,7 @@ VALUES = {
 
 class Deck:
     """ Deck du jeu de société du Président. """
+
     def __init__(self):
         self.__cards: list = []
         """ Génération d'un deck de 52 cartes"""
@@ -73,6 +74,9 @@ class Card:
     def __ne__(self, other):
         return self.__value != other.value
 
+    def __ge__(self, other):
+        return self.__value >= other.value
+
     @property
     def value(self):
         return self.__value
@@ -86,6 +90,8 @@ class Card:
 
 
 class Player:
+    president = False
+
     def __init__(self, player_name=None):
         self._name: str = player_name if player_name is not None else \
             names.get_first_name()
@@ -107,7 +113,7 @@ class Player:
     def name(self):
         return self._name
 
-    def play(self, symbol, ) -> list:
+    def play(self, plays) -> list:
         """
         Remove from the hand of the player, all cards having a corresponding symbol.
         Args:
@@ -115,22 +121,42 @@ class Player:
         Returns: The cards removed from the hand of the player. It will return an empty array if
         nothing is found.
         """
-        cards_selected = [card for card in self._hand if card.symbol ==
-                        symbol]
+
+
+
         cards_played = []
-        print(cards_selected)
 
-        while len(cards_selected) > 1:
+        choice_value = 0
+        choice =None
+        nb_cards = None
+        if plays is None:
+            while choice == None:
+                choice = input('What value do you wish to play ? ')
+                print(choice)
+                #vérifier que choice est correcte
+                if self.has_symbol(choice) > 1:
+                    while not type(nb_cards) == int:
+                        nb_cards = input("nombre de carte jouer ?")
+                        try:
+                            nb_cards=int(nb_cards)
+                        except:
+                            pass
+                elif self.has_symbol(choice) < 1:
+                    choice = None
+                else:
+                    nb_cards=1
+        if plays is not None:
+            nb_cards = len(plays)
+            while choice_value < plays[0].value and nb_cards > self.has_symbol(choice):
+                choice = input('What value do you wish to play ? ')
+                choice_value = VALUES[choice]
 
-            try:
-                choice = int(input("nombre de carte jouer ?"))
-            except ValueError:
-                print("tu n'es pas le pingouin qui glisse le plus loin ")
-            if choice > len(cards_selected):
-                print("Vous n'avez pas assez de carte pour jouer ", choice, "carte")
-            else:
-                for i in range(choice):
-                    cards_played.append(cards_selected.pop(i))
+
+        cards_available = [card for card in self._hand if card.symbol == choice]
+        for i in range(nb_cards):
+            cards_played.append(cards_available.pop(0))
+
+        print(cards_played)
         self.remove_from_hand(cards_played)
         return cards_played
 
@@ -144,11 +170,32 @@ class Player:
                 nb_cards += 1
         return nb_cards
 
+    def infer(x, y):
+        while x < y:
+            print("vous ne pouvez pas jouer une carte inférieure à la carte précedente")
+            return False
+        else:
+            return True
+
+
+def win(best_choice):
+    if best_choice is None:
+        print("je n'ai plus de carte pour pouvoir rivaliser à ton grand pouvoir")
+        return False
+
+
+def winn(variab):
+    compt = 0
+    if variab is None:
+        print("je suis la ")
+        return True
+
 
 class AIPlayer(Player):
+
     def play(self, choice, nb_cards: int) -> list:
         """
-        Play a card correspond to what has been played on the table.
+        Play a card correspondig to what has been played on the table.
         TODO: Implement an AI
         Args:
             choice: The minimum card value to play.
@@ -157,11 +204,12 @@ class AIPlayer(Player):
         """
         best_choice = None
         for index, card in enumerate(self.hand):
-            if best_choice is None and card.symbol >= choice and \
+            if best_choice is None and card.value >= int(VALUES[choice]) and \
                     self.has_symbol(card.symbol) >= \
                     nb_cards:
-                cards_played = self._hand[index:index+nb_cards]
+                cards_played = self._hand[index:index + nb_cards]
                 best_choice = card.symbol
+                self.remove_from_hand(cards_played)
         return cards_played if best_choice is not None else []
 
 
@@ -174,7 +222,7 @@ class PresidentGame:
 
     def __generate_players(self, nb_players):
         self.__players = [Player()]
-        for _ in range(nb_players-1):
+        for _ in range(nb_players - 1):
             self.__players.append(AIPlayer())
 
     def __generate_cards(self):
@@ -187,7 +235,7 @@ class PresidentGame:
         while len(self.__deck.cards) > 0:
             card = self.__deck.pick_card()
             self.__players[giving_card_to_player].add_to_hand(card)
-            giving_card_to_player = (giving_card_to_player+1) % nb_players
+            giving_card_to_player = (giving_card_to_player + 1) % nb_players
 
     @property
     def players(self):
@@ -201,4 +249,3 @@ class PresidentGame:
     def main_player(self):
         """ Main player is player 0 """
         return self.__players[0]
-
