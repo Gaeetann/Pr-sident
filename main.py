@@ -21,7 +21,6 @@ def game_loop(g: PresidentGame):
     wanna_continue = True
     while wanna_continue:
         winner = 0
-        g.distribute_cards()
 
         players_active = [x for x in g.players]
         print("vous jouer contre :")
