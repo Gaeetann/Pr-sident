@@ -121,43 +121,45 @@ class Player:
         Returns: The cards removed from the hand of the player. It will return an empty array if
         nothing is found.
         """
-
-
-
         cards_played = []
 
         choice_value = 0
-        choice =None
+        choice = None
         nb_cards = None
         if plays is None:
             while choice == None:
                 choice = input('What value do you wish to play ? ')
                 print(choice)
-                #vérifier que choice est correcte
-                if self.has_symbol(choice) > 1:
-                    while not type(nb_cards) == int:
-                        nb_cards = input("nombre de carte jouer ?")
-                        try:
-                            nb_cards=int(nb_cards)
-                        except:
-                            pass
-                elif self.has_symbol(choice) < 1:
-                    choice = None
-                else:
-                    nb_cards=1
+                if choice != "0":
+                    if self.has_symbol(choice) > 1:
+                        while not type(nb_cards) == int:
+                            nb_cards = input("nombre de carte jouer ?")
+                            try:
+                                nb_cards = int(nb_cards)
+                            except:
+                                pass
+                    elif self.has_symbol(choice) < 1:
+                        choice = None
+                    else:
+                        nb_cards = 1
         if plays is not None:
             nb_cards = len(plays)
-            while choice_value < plays[0].value and nb_cards > self.has_symbol(choice):
+
+            while (choice_value < plays[0].value or nb_cards > self.has_symbol(choice)) and choice != "0":
                 choice = input('What value do you wish to play ? ')
-                choice_value = VALUES[choice]
+                try:
+                    choice_value = VALUES[choice]
+                except:
+                    pass
 
-
-        cards_available = [card for card in self._hand if card.symbol == choice]
-        for i in range(nb_cards):
-            cards_played.append(cards_available.pop(0))
-
-        print(cards_played)
-        self.remove_from_hand(cards_played)
+        if choice != "0":
+            cards_available = [card for card in self._hand if card.symbol == choice]
+            for i in range(nb_cards):
+                cards_played.append(cards_available.pop(0))
+            print(cards_played)
+            self.remove_from_hand(cards_played)
+        else:
+            cards_played = []
         return cards_played
 
     def __repr__(self):
@@ -203,6 +205,13 @@ class AIPlayer(Player):
         Returns: An array of cards to play.
         """
         best_choice = None
+        if choice is None or choice == 0:
+            nb_cards = 0
+            for card in self.hand:
+                if nb_cards < self.has_symbol(card.symbol):
+                    nb_cards = self.has_symbol(card.symbol)
+                    choice = card.symbol
+
         for index, card in enumerate(self.hand):
             if best_choice is None and card.value >= int(VALUES[choice]) and \
                     self.has_symbol(card.symbol) >= \
@@ -214,9 +223,10 @@ class AIPlayer(Player):
 
 
 class PresidentGame:
+    president = None
+    trouduc = None
     def __init__(self, nb_players):
         self.__generate_players(nb_players)
-        self.__generate_cards()
         self.distribute_cards()
         self.round = 0
 
@@ -230,13 +240,13 @@ class PresidentGame:
         self.__deck.shuffle()
 
     def distribute_cards(self):
+        self.__generate_cards()
         giving_card_to_player = 0
         nb_players = len(self.__players)
         while len(self.__deck.cards) > 0:
             card = self.__deck.pick_card()
             self.__players[giving_card_to_player].add_to_hand(card)
             giving_card_to_player = (giving_card_to_player + 1) % nb_players
-
     @property
     def players(self):
         return self.__players

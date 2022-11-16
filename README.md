@@ -67,16 +67,16 @@ A partir du fichier `main.py`, implémentez une petite interface pour représent
  Et leurs interactions.
  
 - [X] Présentation des joueurs en début de partie, et affichage du nombre de cartes que chaque joueur a en main.
-- [ ] Le déroulé d'une manche. 
+- [x] Le déroulé d'une manche. 
     - Chaque utilisateur doit fournir s'il peut (ou veut) la quantité de cartes demandées.
     - Le vainqueur d'une manche ouvre la manche suivante
     - Il existe un gagnant (celui qui a vidé sa main) et un perdant (le dernier joueur a encore avoir des cartes en main).
- - [ ] Gestion d'une fin et lancement d'une nouvelle partie, affichage des scores
- - [ ] Le mécanisme de troufion et de président
+ - [x] Gestion d'une fin et lancement d'une nouvelle partie, affichage des scores
+ - [x] Le mécanisme de troufion et de président
     - En fonction du nombre de joueurs, et  de la partie précédente il peut exister : 
         - Un président et un troufion si 3 ou 4 joueurs (1 carte)
         - Ajout d'un vice président et d'un vice troufion si 5+ (2 cartes (président <-> trouffion), 1 carte (vice <-> vice)
     - Le troufion doit donner sa meilleure carte, le président choisit quelle carte donner
  - [ ] Interface graphique
- - [ ] Intelligence artificielle 
+ - [x] Intelligence artificielle 
     - Ajoutez un raisonnement simple en plus du raisonnement déjà existant.
